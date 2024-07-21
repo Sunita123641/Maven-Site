@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.1.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>au.com.lucidtech.maveninactionwithgithubactions</groupId>
+    <artifactId>maveninactionwithgithubactions</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Maven Plugins In Action With GitHub Action</name>
+    <description>Setting up Maven plugins for the project and automating deployment with GitHub Actions</description>
+    <url>${scm.repo.link}</url>
+
+    <modules>
+        <module>SiteGeneration</module>
+        <module>TestsExecution</module>
+        <module>JacocoExecution</module>
+        <module>PuttingAllTogether</module>
+    </modules>
+
+    <organization>
+        <name>${organization.name}</name>
+        <url>${organization.url}</url>
+    </organization>
+
+    <scm>
+        <url>${scm.repo.link}</url>
+        <connection>scm:git:${scm.repo.link}.git</connection>
+        <developerConnection>scm:git:${scm.repo.link}.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>${issueManagement.url}</url>
+    </issueManagement>
+
+    <ciManagement>
+        <system>github-actions</system>
+        <url>${ciManagement.url}</url>
+    </ciManagement>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>${owner.name}</name>
+            <organization>${project.organization.name}</organization>
+            <organizationUrl>${organization.url}</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>GMT</timezone>
+        </developer>
+    </developers>
+
+    <properties>
+        <owner.name>Muhammad Faisal</owner.name>
+        <organization.name>LucidTech</organization.name>
+
+        <owner.twitter.handle>mfa1616</owner.twitter.handle>
+
+        <scm.user.name>faisalazam</scm.user.name>
+        <scm.repo.name>MavenInActionWithGitHubActions</scm.repo.name>
+        <scm.user.link>https://github.com/${scm.user.name}</scm.user.link>
+        <scm.repo.link>${scm.user.link}/${scm.repo.name}</scm.repo.link>
+
+        <organization.url>${scm.user.link}</organization.url>
+        <ciManagement.url>${scm.repo.link}/actions</ciManagement.url>
+        <issueManagement.url>${scm.repo.link}/issues</issueManagement.url>
+
+
+        <target.directory>${project.build.directory}</target.directory>
+        <target.site.directory>${project.reporting.outputDirectory}</target.site.directory>
+        <src.site.directory>src/site</src.site.directory>
+        <markdown.directory>markdown</markdown.directory>
+        <src.markdown.directory>${src.site.directory}/${markdown.directory}</src.markdown.directory>
+
+        <copy.right.info>
+            <![CDATA[Copyright© 2023 <a href="${organization.url}">${organization.name}</a>. All Rights Reserved.]]></copy.right.info>
+
+        <!--    Setting the encodings to avoid warnings like `Input file encoding has not been set`    -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!--   Setting the versions to use Java 20   -->
+        <java.version>20</java.version>
+        <maven.compiler.release>20</maven.compiler.release>
+
+        <!--   Plugin Versions   -->
+        <maven-clean-plugin.version>3.3.1</maven-clean-plugin.version>
+        <maven-site-plugin.version>4.0.0-M8</maven-site-plugin.version>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+        <maven-project-info-reports-plugin.version>3.4.5</maven-project-info-reports-plugin.version>
+    </properties>
+
+    <distributionManagement>
+        <site>
+            <id>${project.artifactId}-site</id>
+            <url>${project.baseUri}</url>
+        </site>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven-site-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${maven-project-info-reports-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${maven-clean-plugin.version}</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${src.site.directory}</directory>
+                            <includes>
+                                <include>${markdown.directory}/*</include>
+                                <include>${markdown.directory}</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <!-- Copy the readme file to the site markdown directory so that a page is generated from it. -->
+                        <id>copy-readme</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <overwrite>true</overwrite>
+                            <outputDirectory>${src.markdown.directory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}</directory>
+                                    <includes>
+                                        <include>README.md</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
