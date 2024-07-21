@@ -24,8 +24,7 @@
 
 ## Inspiration
 <p>
-    While working on a personal project, felt a need to develop and share a template maven project solving 
-    the basic problems. Some of them are included below which led to a series of small projects in this repo:
+   
 </p>
 <ul>
     <li>Running all tests</li>
@@ -39,8 +38,6 @@
     <li>Automated deployment to GitHub Pages using GitHub Workflows and Actions</li>
 </ul>
 
-## Modules
-Following are the submodules of this [parent project][parent-project-url]:
 
 | Module                                         | Status                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 |------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -62,26 +59,7 @@ Default locale: en_AU, platform encoding: UTF-8
 OS name: "mac os x", version: "13.4", arch: "x86_64", family: "mac"
 ```
 
-Contributing
-------------
 
-We accept Pull Requests via GitHub. Comments on the PRs is the main channel of communication for contributors.
-There are some guidelines which will make applying PRs easier for us:
-+ No tabs! Please use spaces for indentation.
-+ Respect the code style.
-+ Create minimal diffs - disable on save actions like reformat source code or organize imports. If you feel the source code should be reformatted create a separate PR for this change.
-+ Provide [JUnit tests][junit-url] for your changes and ensure that your changes don't break any existing tests by running:
-    + ```mvn clean test verify```
-+ You can check whether there are currently broken tests at the [Continuous Integration][parent-cicd-link-url] page.
-
-If you plan to contribute on a regular basis, please consider filing a [contributor license agreement][contributor-license-agreement-url].
-You can learn more about contributing via GitHub in our [contribution guidelines](CONTRIBUTING.md).
-
-License
--------
-This code is under the [Apache Licence v2][apache-license-link-url].
-
-<!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [parent-cicd-link-url]:https://github.com/faisalazam/MavenInActionWithGitHubActions/actions/workflows/parent-build.yml
 [apache-license-badge-url]:https://img.shields.io/github/license/apache/maven.svg?label=License
